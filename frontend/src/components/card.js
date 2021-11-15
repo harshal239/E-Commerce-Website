@@ -1,24 +1,15 @@
-import '../App.css';
-const Card = ({item}) => {
-    return ( 
-        <div className="card"
-        style={{
-            width:"10rem",
-            height:"15rem"
-        }}
-    >
-                <div className="details">
-                        <img src={item.image}></img><br/>
-                        <strong><div className="title">
-                            {item.title}</div>
-                        </strong><br/>
-                        <span>Price: $</span><b>{item.price}</b>
-                        <strike>10000</strike>
-                        <br></br>
-                        <button>Buy</button>
-                </div>
-        </div>
-     );
-}
- 
+import "../App.css";
+const Card = ({ item }) => {
+  return (
+    <div className="product__card">
+      <img src={item.image} alt="" className="product__img" />
+      <p className="product__title">{item.title}</p>
+      <p className="product__price">
+        Price: <span>{item.price}</span>
+      </p>
+      <button className="product__btn">Buy</button>
+    </div>
+  );
+};
+
 export default Card;

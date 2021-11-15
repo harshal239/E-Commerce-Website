@@ -1,24 +1,35 @@
-import { useEffect, useState } from 'react';
-import './App.css';
-import Card from './components/card';
-import Navbar from './components/navbar';
-import Homepage from './pages/homepage';
+import { useEffect, useState } from "react";
+import "./App.css";
+import Card from "./components/Card";
+import Navbar from "./components/Navbar";
+import Homepage from "./pages/Homepage";
+import AboutPage from "./pages/AboutPage";
+import Cart from "./pages/Cart";
+import ProfilePage from "./pages/ProfilePage";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
 function App() {
+  const [data, setData] = useState([]);
 
-  const [data,setData]=useState([]);
-  
+  useEffect(() => {
+    fetch("https://fakestoreapi.com/products?limit=10")
+      .then((res) => res.json())
+      .then((jsonForm) => setData(jsonForm))
+      .then(console.log(data))
+      .catch((err) => console.log(err));
+  }, []);
 
-  useEffect(()=>{
-    fetch('https://fakestoreapi.com/products')
-            .then(res=>res.json())
-            .then(jsonForm=>setData(jsonForm))
-            .then(console.log(data))
-  },[]);
   return (
     <div className="App">
-        <Navbar/>
-        <Homepage  data = {data}/>
+      <Router>
+        <Navbar />
+        <Routes>
+          <Route path="/" element={<Homepage data={data} />} />
+          <Route path="/about" element={<AboutPage />} />
+          <Route path="/cart" element={<Cart />} />
+          <Route path="/profile" element={<ProfilePage />} />
+        </Routes>
+      </Router>
     </div>
   );
 }
