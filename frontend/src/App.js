@@ -1,36 +1,55 @@
-import { useEffect, useState } from "react";
-import "./App.css";
-import Card from "./components/Card";
-import Navbar from "./components/Navbar";
-import Homepage from "./pages/Homepage";
-import AboutPage from "./pages/AboutPage";
-import Cart from "./pages/Cart";
-import ProfilePage from "./pages/ProfilePage";
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import React, { useEffect, useState } from "react";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { createTheme, ThemeProvider } from "@mui/material";
+import HomePage from "./pages/HomePage";
+import ProductPage from "./pages/ProductPage";
+import About from "./pages/About";
+import api from "./api/product";
+
+const theme = createTheme({
+  palette: {
+    type: "light",
+    primary: {
+      main: "#03045e",
+      dark: "#03045e",
+      light: "#00b4d8",
+    },
+    secondary: {
+      main: "#f50057",
+    },
+  },
+  typography: {
+    fontFamily: "Poppins",
+  },
+});
 
 function App() {
-  const [data, setData] = useState([]);
+  const [products, setProducts] = useState([]);
 
+  const RetrieveProducts = async () => {
+    const response = await api.get("/");
+    setProducts(response.data);
+  };
+  const AddProduct = () => {};
   useEffect(() => {
-    fetch("https://fakestoreapi.com/products?limit=10")
-      .then((res) => res.json())
-      .then((jsonForm) => setData(jsonForm))
-      .then(console.log(data))
-      .catch((err) => console.log(err));
+    RetrieveProducts();
   }, []);
-
   return (
-    <div className="App">
-      <Router>
-        <Navbar />
-        <Routes>
-          <Route path="/" element={<Homepage data={data} />} />
-          <Route path="/about" element={<AboutPage />} />
-          <Route path="/cart" element={<Cart />} />
-          <Route path="/profile" element={<ProfilePage />} />
-        </Routes>
-      </Router>
-    </div>
+    <ThemeProvider theme={theme}>
+      <div>
+        <BrowserRouter>
+          <Routes>
+            <Route path="/" exact element={<HomePage />} />
+            <Route
+              path="/products"
+              exact
+              element={<ProductPage products={products} />}
+            />
+            <Route path="/about" exact element={<About />} />
+          </Routes>
+        </BrowserRouter>
+      </div>
+    </ThemeProvider>
   );
 }
 

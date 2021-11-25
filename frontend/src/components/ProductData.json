@@ -1,0 +1,72 @@
+[
+  {
+    "name": "Jockey Men's Regular Fit T-Shirt",
+    "image": "https://images.unsplash.com/photo-1618354691373-d851c5c3a990?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=415&q=80",
+    "description": "Black",
+    "category": "Men's Clothing",
+    "price": "$40",
+    "quantity": 10,
+    "review": [
+      {
+        "rating": 4,
+        "comment": "Very Good product"
+      }
+    ]
+  },
+  {
+    "name": "Miss fame Women's Rayon Shirt",
+    "image": "https://images.unsplash.com/photo-1589810635657-232948472d98?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=880&q=80",
+    "description": "Blue",
+    "category": "Women's Clothing",
+    "price": "$40",
+    "quantity": 10,
+    "review": [
+      {
+        "rating": 4,
+        "comment": "Very Good product"
+      }
+    ]
+  },
+  {
+    "name": "Sennheiser HD 206 507364 Headphones (Black)",
+    "image": "https://images.unsplash.com/photo-1615375834706-98afda0d534f?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=926&q=80",
+    "description": "Black",
+    "category": "Electronics",
+    "price": "$40",
+    "quantity": 10,
+    "review": [
+      {
+        "rating": 4,
+        "comment": "Very Good product"
+      }
+    ]
+  },
+  {
+    "name": "Apple iPhone 11 (64GB) - (Product)",
+    "image": "https://images.unsplash.com/photo-1591337676887-a217a6970a8a?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=880&q=80",
+    "description": "Black",
+    "category": "Mobile",
+    "price": "$40",
+    "quantity": 10,
+    "review": [
+      {
+        "rating": 4,
+        "comment": "Very Good product"
+      }
+    ]
+  },
+  {
+    "name": "2021 Apple MacBook Pro (16-inch/41.05 cm)",
+    "image": "https://images.unsplash.com/photo-1550234646-8d03f6e034fb?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=880&q=80",
+    "description": "Space Grey",
+    "category": "Computer",
+    "price": "$40",
+    "quantity": 10,
+    "review": [
+      {
+        "rating": 4,
+        "comment": "Very Good product"
+      }
+    ]
+  }
+]
