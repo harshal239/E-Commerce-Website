@@ -11,7 +11,7 @@ const ReviewSchema = mongoose.Schema({
   },
 });
 
-const ProductSchema = mongoose.Schema({
+const ProductSchema = new mongoose.Schema({
   name: {
     type: String,
     required: true,
@@ -29,7 +29,7 @@ const ProductSchema = mongoose.Schema({
     required: true,
   },
   price: {
-    type: Number,
+    type: String,
     required: true,
   },
   quantity: {

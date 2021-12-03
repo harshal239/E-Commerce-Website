@@ -9,13 +9,16 @@ require("dotenv/config");
 const User = require("./routes/User");
 const Product = require("./routes/Product");
 const Cart = require("./routes/Cart");
+const Order = require("./routes/Order");
 
+//Middlewares
 app.use(cors());
 app.use(express.json());
 
 app.use("/api/v1/user", User);
 app.use("/api/v1/product", Product);
 app.use("/api/v1/cart", Cart);
+app.use("/api/v1/order", Order);
 
 app.get("/", (req, res) => {
   res.send("Hello World !");

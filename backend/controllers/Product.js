@@ -3,8 +3,9 @@ const Product = require("../models/Product");
 const getAllProducts = async (req, res) => {
   try {
     const limit = Number(req.query.limit) || 0;
+    const sort = req.query.sort === "desc" ? -1 : 1;
 
-    const products = await Product.find().limit(limit).sort();
+    const products = await Product.find().limit(limit).sort({ name: sort });
     res.status(201).json(products);
   } catch (error) {
     res.status(500).json(error.message);

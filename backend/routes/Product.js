@@ -12,7 +12,7 @@ const {
 } = require("../controllers/Product");
 
 ProductRouter.route("/").get(getAllProducts).post(addProduct);
-ProductRouter.route("/categories").get(getCategories);
+// ProductRouter.route("/categories").get(getCategories);
 ProductRouter.route("/categories/:category").get(getProductInCategory);
 ProductRouter.route("/:id")
   .get(getProduct)

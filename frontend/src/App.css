@@ -50,3 +50,20 @@
 .navbar ul li a:hover {
   border-bottom: 1px solid black;
 }
+main {
+  min-height: 100%;
+}
+.links__container,
+.social__links {
+  display: flex;
+  align-items: center;
+}
+.social__links {
+  gap: 1rem;
+}
+.link__icon {
+  cursor: pointer;
+  padding: 0.5rem;
+  font-size: 1.2rem;
+  border-radius: 50%;
+}

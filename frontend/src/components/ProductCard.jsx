@@ -5,22 +5,41 @@ import {
   Typography,
   Box,
   CardActions,
-  Divider,
   Button,
   useTheme,
 } from "@mui/material";
 import React from "react";
-import ProductImage from "../images/product-01.jpg";
+import { useDispatch, useSelector } from "react-redux";
+import { Link } from "react-router-dom";
+import { deleteProductAction } from "../Redux/actions/productActions";
 
-function ProductCard({ image, name, desc, price }) {
+function ProductCard({ id, image, name, desc, price, quantity }) {
   const theme = useTheme();
+  const dispatch = useDispatch();
+  const productDelete = useSelector((state) => state.productDelete);
+  const { loading, error } = productDelete;
+
+  const deleteHandler = (id) => {
+    if (window.confirm("Are you sure?")) {
+      dispatch(deleteProductAction(id));
+    }
+  };
+
   return (
-    <Card sx={{ maxWidth: 270, maxHeight: 400 }}>
+    <Card
+      sx={{
+        width: 270,
+        height: 400,
+        display: "flex",
+        flexDirection: "column",
+        justifyContent: "space-between",
+      }}
+    >
       <CardMedia
         component="img"
         image={image}
         sx={{
-          maxHeight: "10rem",
+          height: "200px",
           objectFit: "fit",
           objectPosition: "top",
         }}
@@ -33,19 +52,34 @@ function ProductCard({ image, name, desc, price }) {
         }}
       >
         <Box>
-          <Typography variant="h6" gutterBottom component="div">
+          <Typography variant="h6" gutterBottom>
             {name}
           </Typography>
           <Typography color="GrayText">{desc}</Typography>
+          <Typography color="GrayText">Quantity : {quantity}</Typography>
         </Box>
         <Typography variant="h4" fontWeight="700">
-          {" "}
           ${price}
         </Typography>
       </CardContent>
       <CardActions>
-        <Button variant="contained" sx={{ margin: " 0 auto 1rem auto" }}>
-          Add to Cart
+        <Button
+          variant="contained"
+          sx={{ margin: " 0 auto 1rem auto" }}
+          color="success"
+        >
+          <Link to={`/products/${id}`}>Update</Link>
+        </Button>
+
+        <Button
+          variant="contained"
+          sx={{ margin: " 0 auto 1rem auto" }}
+          color="error"
+          onClick={() => {
+            deleteHandler(id);
+          }}
+        >
+          Delete
         </Button>
       </CardActions>
     </Card>

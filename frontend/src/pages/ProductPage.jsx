@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import Header from "../components/Header";
 import {
   Container,
@@ -11,19 +11,55 @@ import {
   RadioGroup,
   FormControlLabel,
   Radio,
+  InputLabel,
+  Select,
+  MenuItem,
+  OutlinedInput,
+  Button,
 } from "@mui/material";
 import ProductCard from "../components/ProductCard";
 import CategoryMenu from "../components/CategoryMenu";
+import {
+  productList,
+  productFilterList,
+} from "../Redux/actions/productActions";
+import { useDispatch, useSelector } from "react-redux";
 
-const cards = [1, 2, 3, 4, 5, 6, 7, 8, 9];
+function ProductPage() {
+  const dispatch = useDispatch();
+  const productsList = useSelector((state) => state.allproducts);
+  const { loading, error, products } = productsList;
 
-function ProductPage({ products }) {
-  const [value, setValue] = React.useState("Ascending");
-  console.log(products);
+  const [category, setCategory] = useState("");
+  const [sort, setSort] = useState("");
+
+  const productDelete = useSelector((state) => state.productDelete);
+  const {
+    loading: loadingDelete,
+    error: errorDelete,
+    success: successDelete,
+  } = productDelete;
+
+  const productFilter = useSelector((state) => state.filteredProducts);
+  const { loading: loadingFilter, filteredProducts } = productFilter;
+
+  useEffect(() => {
+    dispatch(productList(sort));
+    dispatch(productFilterList(category));
+  }, [dispatch, successDelete, sort, category]);
 
   const handleChange = (event) => {
-    setValue(event.target.value);
+    setSort(event.target.value);
   };
+
+  const handleChange2 = (event) => {
+    setCategory(event.target.value);
+  };
+  const clearFilters = () => {
+    setSort("");
+    setCategory("");
+  };
+
   const theme = useTheme();
   return (
     <div>
@@ -43,6 +79,11 @@ function ProductPage({ products }) {
               <Box
                 sx={{
                   padding: "0 1rem",
+
+                  display: "flex",
+                  flexDirection: "column",
+                  alignItems: "flex-start",
+                  gap: "1.5rem",
                 }}
               >
                 <FormControl>
@@ -50,37 +91,77 @@ function ProductPage({ products }) {
                   <RadioGroup
                     aria-label="products-filter"
                     name="controlled-radio-buttons-group"
-                    value={value}
+                    value={sort}
                     onChange={handleChange}
                   >
                     <FormControlLabel
-                      value="Ascending"
+                      value="asc"
                       control={<Radio />}
                       label="Ascending"
                     />
                     <FormControlLabel
-                      value="Descending"
+                      value="desc"
                       control={<Radio />}
                       label="Descending"
                     />
                   </RadioGroup>
-                  <CategoryMenu />
                 </FormControl>
+                <Box>
+                  <FormControl sx={{ width: 180 }}>
+                    <InputLabel id="demo-simple-select-label">
+                      Categories
+                    </InputLabel>
+                    <Select
+                      labelId="demo-simple-select-label"
+                      id="demo-simple-select"
+                      value={category}
+                      label="Categories"
+                      onChange={handleChange2}
+                    >
+                      <MenuItem value="Men's Clothing">Men's Clothing</MenuItem>
+                      <MenuItem value="Women's Clothing">
+                        Women's Clothing
+                      </MenuItem>
+                      <MenuItem value="Electronics">Electronics</MenuItem>
+                      <MenuItem value="Computer">Computer</MenuItem>
+                      <MenuItem value="Mobile">Mobile</MenuItem>
+                    </Select>
+                  </FormControl>
+                </Box>
+                <Button variant="outlined" onClick={clearFilters}>
+                  Clear Filters
+                </Button>
               </Box>
             </Grid>
-            <Grid item container sm md={10} spacing={4}>
-              {products.map((card) => {
-                return (
-                  <Grid item key={card._id}>
-                    <ProductCard
-                      name={card.name}
-                      price={card.price}
-                      desc={card.desc}
-                      image={card.image}
-                    />
-                  </Grid>
-                );
-              })}
+            <Grid item container md={10} spacing={4}>
+              {category
+                ? filteredProducts?.map((card) => {
+                    return (
+                      <Grid item key={card._id}>
+                        <ProductCard
+                          id={card._id}
+                          name={card.name}
+                          price={card.price}
+                          desc={card.description}
+                          image={card.image}
+                        />
+                      </Grid>
+                    );
+                  })
+                : products?.map((card) => {
+                    return (
+                      <Grid item key={card._id}>
+                        <ProductCard
+                          id={card._id}
+                          name={card.name}
+                          price={card.price}
+                          desc={card.description}
+                          image={card.image}
+                          quantity={card.quantity}
+                        />
+                      </Grid>
+                    );
+                  })}
             </Grid>
           </Grid>
         </Container>

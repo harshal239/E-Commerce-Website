@@ -11,15 +11,18 @@ import {
   OutlinedInput,
   InputAdornment,
 } from "@mui/material";
-import React, { useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { createProductAction } from "../Redux/actions/productActions";
+import React, { useEffect, useState } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { useNavigate, useParams } from "react-router-dom";
 import Header from "../components/Header";
-import { useNavigate } from "react-router-dom";
-import Phone from "../images/Phone_.png";
+import product from "../api/product";
+import {
+  updateProductAction,
+  deleteProductAction,
+} from "../Redux/actions/productActions";
 import Footer from "../components/Footer";
 
-function AddProduct() {
+function SingleProductPage() {
   const [name, setName] = useState("");
   const [image, setImage] = useState("");
   const [description, setDescription] = useState("");
@@ -28,10 +31,34 @@ function AddProduct() {
   const [price, setPrice] = useState("");
 
   const dispatch = useDispatch();
-  const productCreate = useSelector((state) => state.productCreate);
-  const { loading, error, product } = productCreate;
+  const productUpdate = useSelector((state) => state.productUpdate);
+  const { loading, error } = productUpdate;
 
+  const productDelete = useSelector((state) => state.productDelete);
+  const { loading: loadingDelete, error: errorDelete } = productDelete;
+
+  const { id } = useParams();
   const navigate = useNavigate();
+
+  const deleteHandler = (id) => {
+    if (window.confirm("Are you sure ?")) {
+      dispatch(deleteProductAction(id));
+    }
+    navigate("/products");
+  };
+
+  useEffect(() => {
+    const fetching = async () => {
+      const { data } = await product.get(`/product/${id}`);
+      setName(data.name);
+      setImage(data.image);
+      setDescription(data.description);
+      setCategory(data.category);
+      setQuantity(data.quantity);
+      setPrice(data.price);
+    };
+    fetching();
+  }, [id]);
 
   const resetHandler = () => {
     setName("");
@@ -45,7 +72,15 @@ function AddProduct() {
     e.preventDefault();
     if (!name || !description || !image || !quantity || !category) return;
     dispatch(
-      createProductAction(name, image, description, category, price, quantity)
+      updateProductAction(
+        id,
+        name,
+        image,
+        description,
+        category,
+        price,
+        quantity
+      )
     );
 
     resetHandler();
@@ -53,7 +88,7 @@ function AddProduct() {
   };
 
   return (
-    <>
+    <div>
       <Header />
       <Container
         maxWidth="sm"
@@ -65,7 +100,7 @@ function AddProduct() {
         }}
       >
         <Typography variant="h2" fontWeight="600" align="center" gutterBottom>
-          Add Product
+          Edit Product
         </Typography>
         <Box sx={{ width: "100%" }}>
           <form
@@ -86,6 +121,7 @@ function AddProduct() {
                 e.preventDefault();
                 setName(e.target.value);
               }}
+              disabled
             />
             <TextField
               fullWidth
@@ -97,7 +133,7 @@ function AddProduct() {
               }}
             />
             <img
-              src={image ? image : Phone}
+              src={image}
               alt="Product Image"
               style={{
                 height: "200px",
@@ -114,6 +150,7 @@ function AddProduct() {
                 e.preventDefault();
                 setDescription(e.target.value);
               }}
+              disabled
             />
             <TextField
               fullWidth
@@ -150,6 +187,7 @@ function AddProduct() {
                 onChange={(e) => {
                   setCategory(e.target.value);
                 }}
+                disabled
               >
                 <MenuItem value="Men's Clothing">Men's Clothing</MenuItem>
                 <MenuItem value="Women's Clothing">Women's Clothing</MenuItem>
@@ -158,15 +196,30 @@ function AddProduct() {
                 <MenuItem value="Mobile">Mobile</MenuItem>
               </Select>
             </FormControl>
-            <Button variant="contained" color="primary" type="submit">
-              Submit
-            </Button>
+            <Box
+              sx={{
+                width: "100%",
+                display: "flex",
+                justifyContent: "space-around",
+              }}
+            >
+              <Button variant="contained" color="success" type="submit">
+                Update
+              </Button>
+              <Button
+                variant="contained"
+                color="error"
+                onClick={() => deleteHandler(id)}
+              >
+                Delete
+              </Button>
+            </Box>
           </form>
         </Box>
       </Container>
       <Footer />
-    </>
+    </div>
   );
 }
 
-export default AddProduct;
+export default SingleProductPage;

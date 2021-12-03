@@ -72,13 +72,8 @@ function Header() {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
   return (
-    <Container>
-      <AppBar
-        color="primary"
-        sx={{
-          boxShadow: "none",
-        }}
-      >
+    <Box sx={{ flexGrow: 1, marginBottom: "5rem" }}>
+      <AppBar color="primary">
         <Toolbar
           sx={{
             margin: "0 5rem",
@@ -147,26 +142,28 @@ function Header() {
                   <Link to="/">Home</Link>
                 </Typography>
                 <Typography>
+                  <Link to="/addproduct">Add Product</Link>
+                </Typography>
+                <Typography>
                   <Link to="/products">Products</Link>
                 </Typography>
                 <Typography>
                   <Link to="/about">About</Link>
                 </Typography>
-                <Badge badgeContent={4} color="success">
-                  <Button
-                    variant="contained"
-                    endIcon={<ShoppingCartIcon />}
-                    color="secondary"
-                  >
-                    Cart
-                  </Button>
-                </Badge>
+
+                <Button
+                  variant="contained"
+                  endIcon={<ShoppingCartIcon />}
+                  color="secondary"
+                >
+                  <Link to="/cart">Cart</Link>
+                </Button>
               </>
             )}
           </Box>
         </Toolbar>
       </AppBar>
-    </Container>
+    </Box>
   );
 }
 

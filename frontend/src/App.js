@@ -1,10 +1,13 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import { createTheme, ThemeProvider } from "@mui/material";
+import { createTheme, ThemeProvider, CssBaseline } from "@mui/material";
 import HomePage from "./pages/HomePage";
 import ProductPage from "./pages/ProductPage";
 import About from "./pages/About";
-import api from "./api/product";
+import CartPage from "./pages/CartPage";
+import AddProduct from "./pages/AddProduct";
+import SingleProductPage from "./pages/SingleProductPage";
+import "./App.css";
 
 const theme = createTheme({
   palette: {
@@ -24,28 +27,18 @@ const theme = createTheme({
 });
 
 function App() {
-  const [products, setProducts] = useState([]);
-
-  const RetrieveProducts = async () => {
-    const response = await api.get("/");
-    setProducts(response.data);
-  };
-  const AddProduct = () => {};
-  useEffect(() => {
-    RetrieveProducts();
-  }, []);
   return (
     <ThemeProvider theme={theme}>
       <div>
         <BrowserRouter>
           <Routes>
             <Route path="/" exact element={<HomePage />} />
-            <Route
-              path="/products"
-              exact
-              element={<ProductPage products={products} />}
-            />
+            <Route path="/products" exact element={<ProductPage />} />
             <Route path="/about" exact element={<About />} />
+            <Route path="/cart" exact element={<CartPage />} />
+            <Route path="/addproduct" exact element={<AddProduct />} />
+            <Route path="/products/:id" exact element={<SingleProductPage />} />
+            <Route>404 Page Not Found !</Route>
           </Routes>
         </BrowserRouter>
       </div>
