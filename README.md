@@ -1,9 +1,5 @@
 # E-STORE
 
-E-STORE is an e-commerce application built with React JS, Node JS, Express JS, MongoDB, Material UI, and Redux. It allows users to view a variety of products, obtain product information, sort products based on names, and filter products based on categories. The application also provides functionality to perform CRUD (Create, Read, Update, Delete) operations on products.
-
-# E-STORE
-
 E-STORE is an e-commerce application built with React JS, Node JS, Express JS, MongoDB, Material UI and Redux. It allows users to view a variety of products, obtain product information, sort products based on names, and filter products based on categories. The application also provides functionality to perform CRUD (Create, Read, Update, Delete) operations on products.
 
 ## Getting Started
